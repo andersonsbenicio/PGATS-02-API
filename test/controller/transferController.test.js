@@ -11,8 +11,8 @@ describe("TransferController", () => {
   describe("POST /transfers", () => {
     it("Quando informo remetente e destinatário inexistentes recebo 400", async () => {
       const resposta = await request(app).post("/transfers").send({
-        from: "julio",
-        to: "priscila",
+        from: "eustaquio",
+        to: "crispiniana",
         value: 100,
       });
       expect(resposta.status).to.equal(400);

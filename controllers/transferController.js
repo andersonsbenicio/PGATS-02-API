@@ -6,7 +6,7 @@ const transferService = require("../services/transferService");
 router.post("/", (req, res) => {
   const { from, to, amount } = req.body;
   if (!from || !to || typeof amount !== "number") {
-    return res.status(400).json({ error: "Dados transferência inválidos" });
+    return res.status(400).json({ error: "Dados de transferência inválidos" });
   }
   try {
     const transfer = transferService.transfer({ from, to, amount });

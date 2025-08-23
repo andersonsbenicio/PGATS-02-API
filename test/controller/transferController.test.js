@@ -26,7 +26,7 @@ describe("TransferController", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({
           from: "eustaquio",
-          to: "crispiniana",
+          to: "firmina",
           amount: 100,
         });
       expect(resposta.status).to.equal(400);

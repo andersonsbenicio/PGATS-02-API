@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const transferService = require("../services/transferService");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // Realizar transferência
-router.post("/", (req, res) => {
+router.post("/", authMiddleware, (req, res) => {
   const { from, to, amount } = req.body;
   if (!from || !to || typeof amount !== "number") {
     return res.status(400).json({ error: "Dados de transferência inválidos" });
@@ -17,7 +18,7 @@ router.post("/", (req, res) => {
 });
 
 // Listar transferências
-router.get("/", (req, res) => {
+router.get("/", authMiddleware, (req, res) => {
   res.json(transferService.getTransfers());
 });
 

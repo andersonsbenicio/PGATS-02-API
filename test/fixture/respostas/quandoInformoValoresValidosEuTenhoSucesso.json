@@ -1,0 +1,9 @@
+{
+  "message": "Transferência realizada",
+  "transfer": {
+    "from": "eustaquio",
+    "to": "crispiniana",
+    "amount": 100,
+    "date": "2023-10-01T12:00:00Z"
+  }
+}

@@ -24,7 +24,12 @@ router.post("/login", (req, res) => {
   }
   try {
     const user = userService.authenticateUser(username, password);
-    res.json({ message: "Login realizado", user });
+    const jwt = require("jsonwebtoken");
+    const SECRET = process.env.JWT_SECRET || "segredo_super_secreto";
+    const token = jwt.sign({ username: user.username }, SECRET, {
+      expiresIn: "1h",
+    });
+    res.json({ message: "Login realizado", user, token });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }

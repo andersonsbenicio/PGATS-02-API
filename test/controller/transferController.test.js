@@ -12,12 +12,23 @@ const transfService = require("../../services/transferService");
 //Testes
 describe("TransferController", () => {
   describe("POST /transfers", () => {
-    it("Quando informo remetente e destinatário inexistentes recebo 400", async () => {
-      const resposta = await request(app).post("/transfers").send({
-        from: "eustaquio",
-        to: "crispiniana",
-        amount: 100,
+    beforeEach(async () => {
+      const respostaLogin = await request(app).post("/users/login").send({
+        username: "eustaquio",
+        password: "123456",
       });
+
+      token = respostaLogin.body.token;
+    });
+    it("Quando informo remetente e destinatário inexistentes recebo 400", async () => {
+      const resposta = await request(app)
+        .post("/transfers")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          from: "eustaquio",
+          to: "crispiniana",
+          amount: 100,
+        });
       expect(resposta.status).to.equal(400);
       expect(resposta.body).to.have.property(
         "error",
@@ -30,11 +41,14 @@ describe("TransferController", () => {
       const transferServiceMock = sinon.stub(transfService, "transfer");
       transferServiceMock.throws(new Error("Dados de transferência inválidos"));
 
-      const resposta = await request(app).post("/transfers").send({
-        from: "eustaquio",
-        to: "crispiniana",
-        amount: 100,
-      });
+      const resposta = await request(app)
+        .post("/transfers")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          from: "eustaquio",
+          to: "crispiniana",
+          amount: 100,
+        });
 
       expect(resposta.status).to.equal(400);
       expect(resposta.body).to.have.property(
@@ -45,7 +59,7 @@ describe("TransferController", () => {
       sinon.restore();
     });
 
-    it.only("Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED", async () => {
+    it("Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED", async () => {
       // Mocar apenas a função transfer do Service
       const transferServiceMock = sinon.stub(transfService, "transfer");
       transferServiceMock.returns({
@@ -55,11 +69,14 @@ describe("TransferController", () => {
         date: new Date().toDateString(),
       });
 
-      const resposta = await request(app).post("/transfers").send({
-        from: "eustaquio",
-        to: "crispiniana",
-        amount: 100,
-      });
+      const resposta = await request(app)
+        .post("/transfers")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          from: "eustaquio",
+          to: "crispiniana",
+          amount: 100,
+        });
 
       expect(resposta.status).to.equal(201);
 

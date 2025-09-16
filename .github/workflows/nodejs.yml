@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run software tests
-        run: npm run test-controller
+        run: npm run test-rest-controller
 
       - name: Subir a API Rest
         run: npm run start-rest  &
@@ -39,5 +39,8 @@ jobs:
           echo "BASE_URL_REST=${{ secrets.BASE_URL_REST }}" >> .env
           echo "BASE_URL_GRAPHQL={{ secrets.BASE_URL_GRAPHQL }}" >> .env
 
-      - name: Rodar os testes de API via HTTP
-        run: npm run test-external
+      - name: Rodar os testes external de API via HTTP
+        run: npm run test-rest-external
+
+      - name: Rodar os testes external de API GraphQL via HTTP
+        run: npm run test-graphql-external

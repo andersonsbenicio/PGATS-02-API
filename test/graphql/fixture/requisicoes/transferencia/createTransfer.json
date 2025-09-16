@@ -1,0 +1,8 @@
+{
+  "query": "mutation Transfer($from: String!, $to: String!, $amount: Float!) { transfer(from: $from, to: $to, amount: $amount) {datefrom to amount} }",
+  "variables": {
+    "from": "eustaquio",
+    "to": "crispiniana",
+    "amount": 15
+  }
+}

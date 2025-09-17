@@ -1,64 +1,32 @@
 // Bibliotecas
 const request = require("supertest");
-const { expect } = require("chai");
+const { expect, use } = require("chai");
+
+const chaiExclude = require("chai-exclude");
+use(chaiExclude);
+
 require("dotenv").config();
 
-//Testes
+// Testes
 describe("Transfer", () => {
   describe("POST /transfers", () => {
-    beforeEach(async () => {
+    before(async () => {
+      const postLogin = require("../fixture/requisicoes/login/postLogin.json");
+
       const respostaLogin = await request(process.env.BASE_URL_REST)
         .post("/users/login")
-        .send({
-          username: "eustaquio",
-          password: "123456",
-        });
+        .send(postLogin);
 
       token = respostaLogin.body.token;
     });
-    it("Quando informo destinatario inexistentes recebo 400", async () => {
-      const resposta = await request(process.env.BASE_URL_REST)
-        .post("/transfers")
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          from: "eustaquio",
-          to: "firmina",
-          amount: 100,
-        });
-
-      expect(resposta.status).to.equal(400);
-      expect(resposta.body).to.have.property(
-        "error",
-        "Usuário remetente ou destinatário não encontrado"
-      );
-    });
-
-    it("Quando informo remetente e destinatario inexistentes recebo 400", async () => {
-      const resposta = await request(process.env.BASE_URL_REST)
-        .post("/transfers")
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          from: "dioclessiano",
-          to: "firmina",
-          amount: 100,
-        });
-
-      expect(resposta.status).to.equal(400);
-      expect(resposta.body).to.have.property(
-        "error",
-        "Usuário remetente ou destinatário não encontrado"
-      );
-    });
 
     it("Quando informo valores válidos eu tenho sucesso com 201 CREATED", async () => {
+      const postTransfer = require("../fixture/requisicoes/transferencias/postTransfer.json");
+
       const resposta = await request(process.env.BASE_URL_REST)
         .post("/transfers")
         .set("Authorization", `Bearer ${token}`)
-        .send({
-          from: "eustaquio",
-          to: "crispiniana",
-          amount: 100,
-        });
+        .send(postTransfer);
 
       expect(resposta.status).to.equal(201);
 
@@ -67,6 +35,21 @@ describe("Transfer", () => {
       delete resposta.body.transfer.date; // Ignorar a data na comparação
       delete respostaEsperada.transfer.date; // Ignorar a data na comparação
       expect(resposta.body).to.deep.equal(respostaEsperada);
+    });
+
+    const testesDeErrosDeNegocio = require("../fixture/requisicoes/transferencias/postTransferWithErrors.json");
+    testesDeErrosDeNegocio.forEach((teste) => {
+      it(`Testando a regra relacionada a ${teste.nomeDoTeste}`, async () => {
+        const postTransfer = require("../fixture/requisicoes/transferencias/postTransfer.json");
+
+        const resposta = await request(process.env.BASE_URL_REST)
+          .post("/transfers")
+          .set("Authorization", `Bearer ${token}`)
+          .send(teste.postTransfer);
+
+        expect(resposta.status).to.equal(teste.statusCode);
+        expect(resposta.body).to.have.property("error", teste.mensagemEsperada);
+      });
     });
   });
 });

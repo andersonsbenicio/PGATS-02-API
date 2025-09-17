@@ -2,11 +2,11 @@
   {
     "nomeDoTeste": "Saldo insuficiente",
     "createTransfer": {
-      "query": "mutation CreateTransfer($from: String!, $to: String!, $value: Float!) { createTransfer(from: $from, to: $to, value: $value) { date from to value } }",
+      "query": "mutation CreateTransfer($from: String!, $to: String!, $amount: Float!) { createTransfer(from: $from, to: $to, amount: $amount) { date from to amount } }",
       "variables": {
-        "from": "julio",
-        "to": "priscila",
-        "value": 10000.01
+        "from": "eustaquio",
+        "to": "crispiniana",
+        "amount": 10000.01
       }
     },
     "mensagemEsperada": "Saldo insuficiente"
@@ -14,11 +14,11 @@
   {
     "nomeDoTeste": "Remetente não encontrado",
     "createTransfer": {
-      "query": "mutation CreateTransfer($from: String!, $to: String!, $value: Float!) { createTransfer(from: $from, to: $to, value: $value) { date from to value } }",
+      "query": "mutation CreateTransfer($from: String!, $to: String!, $amount: Float!) { createTransfer(from: $from, to: $to, amount: $amount) { date from to amount } }",
       "variables": {
-        "from": "isa",
-        "to": "priscila",
-        "value": 15
+        "from": "firmina",
+        "to": "crispiniana",
+        "amount": 15
       }
     },
     "mensagemEsperada": "Usuário remetente ou destinatário não encontrado"
@@ -26,11 +26,11 @@
   {
     "nomeDoTeste": "Destinatário não encontrado",
     "createTransfer": {
-      "query": "mutation CreateTransfer($from: String!, $to: String!, $value: Float!) { createTransfer(from: $from, to: $to, value: $value) { date from to value } }",
+      "query": "mutation CreateTransfer($from: String!, $to: String!, $amount: Float!) { createTransfer(from: $from, to: $to, amount: $amount) { date from to amount } }",
       "variables": {
-        "from": "julio",
-        "to": "isa",
-        "value": 15
+        "from": "eustaquio",
+        "to": "firmina",
+        "amount": 15
       }
     },
     "mensagemEsperada": "Usuário remetente ou destinatário não encontrado"

@@ -7,6 +7,8 @@ use(chaiExclude);
 
 require("dotenv").config();
 
+console.log("BASE_URL_REST:", process.env.BASE_URL_REST);
+
 // Testes
 describe("Transfer", () => {
   describe("POST /transfers", () => {

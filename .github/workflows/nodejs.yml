@@ -28,6 +28,9 @@ jobs:
       - name: Subir a API Rest
         run: npm run start-rest &
 
+      - name: Esperar API REST estar pronta
+        run: npx wait-on http://localhost:3000/users/login
+
       - name: Subir a API GraphQL
         run: npm run start-graphql &
 

@@ -22,7 +22,6 @@ describe("Transfer", () => {
 
     it("Quando informo valores válidos eu tenho sucesso com 201 CREATED", async () => {
       const postTransfer = require("../fixture/requisicoes/transferencias/postTransfer.json");
-
       const resposta = await request(process.env.BASE_URL_REST)
         .post("/transfers")
         .set("Authorization", `Bearer ${token}`)
@@ -32,9 +31,11 @@ describe("Transfer", () => {
 
       // Validação com um Fixture
       const respostaEsperada = require("../fixture/respostas/quandoInformoValoresValidosEuTenhoSucesso.json");
-      delete resposta.body.transfer.date; // Ignorar a data na comparação
-      delete respostaEsperada.transfer.date; // Ignorar a data na comparação
-      expect(resposta.body).to.deep.equal(respostaEsperada);
+      // delete resposta.body.transfer.date; // Ignorar a data na comparação
+      // delete respostaEsperada.transfer.date; // Ignorar a data na comparação
+      expect(resposta.body.transfer)
+        .excluding("date")
+        .to.deep.equal(respostaEsperada.transfer);
     });
 
     const testesDeErrosDeNegocio = require("../fixture/requisicoes/transferencias/postTransferWithErrors.json");

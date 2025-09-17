@@ -25,7 +25,7 @@ describe("Testes de Transferência", () => {
       .post("")
       .set("Authorization", `Bearer ${token}`)
       .send(createTransfer);
-    console.log("Resposta da transferência:", respostaTransferencia.body);
+
     expect(respostaTransferencia.status).to.equal(200);
     expect(respostaTransferencia.body.data.createTransfer)
       .excluding("date")
@@ -39,10 +39,7 @@ describe("Testes de Transferência", () => {
         .post("")
         .set("Authorization", `Bearer ${token}`)
         .send(teste.createTransfer);
-      console.log(
-        "Resposta da transferência (erro):",
-        respostaTransferencia.body
-      );
+
       expect(respostaTransferencia.status).to.equal(200);
       expect(respostaTransferencia.body.errors[0].message).to.equal(
         teste.mensagemEsperada

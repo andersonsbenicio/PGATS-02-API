@@ -65,7 +65,7 @@ describe("TransferController", () => {
       transferServiceMock.returns({
         from: "eustaquio",
         to: "crispiniana",
-        amount: 100,
+        amount: 10,
         date: new Date().toDateString(),
       });
 
@@ -75,7 +75,7 @@ describe("TransferController", () => {
         .send({
           from: "eustaquio",
           to: "crispiniana",
-          amount: 100,
+          amount: 10,
         });
 
       expect(resposta.status).to.equal(201);

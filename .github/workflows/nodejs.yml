@@ -31,8 +31,8 @@ jobs:
       - name: Subir a API GraphQL
         run: npm run start-graphql  &
 
-      - name: Esperar a APIs estarem Funcionando
-        run: sleep 8
+      - name: Esperar as APIs estarem Funcionando
+        run: sleep 15
 
       - name: Criar .env
         run: |

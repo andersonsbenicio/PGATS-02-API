@@ -1,0 +1,32 @@
+[
+  {
+    "nomeDoTeste": "Saldo insuficiente",
+    "postTransfer": {
+      "from": "eustaquio",
+      "to": "crispiniana",
+      "amount": 10000.01
+    },
+    "statusCode": 400,
+    "mensagemEsperada": "Saldo insuficiente"
+  },
+  {
+    "nomeDoTeste": "Remetente não encontrado",
+    "postTransfer": {
+      "from": "firmina",
+      "to": "crispiniana",
+      "amount": 15
+    },
+    "statusCode": 400,
+    "mensagemEsperada": "Usuário remetente ou destinatário não encontrado"
+  },
+  {
+    "nomeDoTeste": "Destinatário não encontrado",
+    "postTransfer": {
+      "from": "eustaquio",
+      "to": "firmina",
+      "amount": 15
+    },
+    "statusCode": 400,
+    "mensagemEsperada": "Usuário remetente ou destinatário não encontrado"
+  }
+]
